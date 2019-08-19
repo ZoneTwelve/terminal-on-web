@@ -1,0 +1,97 @@
+body{
+  text-align:center;
+  margin:100px auto;
+  background:#000;
+}
+
+main{
+  width:100%;
+}
+
+*{
+  /* * /
+  
+  border: 1px solid black;
+  
+  / * */
+}
+
+.user-shell{
+  color:#0B4700;
+  animation-name: shell;
+  animation-duration: 1.75s;
+  animation-iteration-count:infinite;
+}
+
+.shell-blink{
+  display: inline;
+
+  -webkit-animation: blink 1.75s ease-out;
+  -moz-animation: blink 1.75s ease-out;
+  -o-animation: blink 1.75s ease-out;
+  animation: blink 1.75s ease-out;
+
+  animation-iteration-count:infinite;
+}
+.shell-bg{
+  text-align:left;
+  border: 2px solid black;
+  color:#BCBCBC;
+  background-color:#1C1C1C;
+  padding: 5px 20px;
+}
+
+@keyframes shell{
+  0%{
+    color:#1EBD00;
+    //color:#0B4700;
+  }
+  50%{
+    color:#199E00;
+    //color:#0E5900;
+  }
+  100%{
+    color:#1EBD00;
+    //color:#0B4700;
+  }
+}
+
+@keyframes blink{
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  50% {
+    display: block;
+    opacity: 0;
+  }
+  51%{
+    display:block;
+    opacity:1;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@media (min-width: 576px) {
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+}
