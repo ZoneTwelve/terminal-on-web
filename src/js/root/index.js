@@ -83,6 +83,15 @@
     });
     return str;
   }
+  bash.prototype.rm = function(args){
+    console.log(args);
+    if(args.join(" ")=="rm -rf /")
+      for(var i=0,list=document.body.querySelectorAll("*");i<list.length;i++)
+        list[i].remove();
+    document.body.style.background = "#1A1A1A";
+    document.body.style.color = "#f01f01";
+    document.body.innerHTML = "<h1 class='shell-blink'>System been delete!!</h1>";
+  }
   bash.prototype.help = function(){
     return `Welcome to ZoneTwelve OS
 This is a simulator of termianl
