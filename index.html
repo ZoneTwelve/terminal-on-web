@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/src/css/bootstrap.min.css">
-<link rel="stylesheet" href="/src/css/root/index.css">
+<link rel="stylesheet" href="src/css/bootstrap.min.css">
+<link rel="stylesheet" href="src/css/root/index.css">
 </head>
 <body>
 <main>
@@ -12,16 +12,19 @@
       <span class="window-title-btn window-default-btn">□</span>
       <span class="window-title-btn window-red-btn" style="border-radius:0px 2px 0px 0px;">×</span>
     </div>
-    <div class="shell-bg" style="border-radius:0px 0px 5px 5px; opacity:0.8;"><span class="user-shell">bob@linux:~ </span>$ ls -al
+    <div class="shell-bg" style="border-radius:0px 0px 5px 5px; opacity:0.8;">
+      <span class="shell-content"><span class="user-shell">bob@linux:~ </span>$ ls -al
       total 60
       drwxrwxr-x 2 ZoneTwelve ZoneTwelve  4096 Aug 20 00:42 .
       drwxrwxr-x 5 ZoneTwelve ZoneTwelve  4096 Aug 20 00:42 ..
       -rwxrwx--- 1 ZoneTwelve ZoneTwelve 52386 Aug 20 00:43 exploit
       <span class="user-shell">bob@linux:~ </span>$ ./exploit
       Success!
-      Press any key to continue ...<span class="shell-blink"> ▍</span>
+      Press any key to continue ...</span>
+      <span class="shell-blink"> ▍</span>
     </div>
   </div>
 </main>
 </body>
+<script src="src/js/root/index.js"></script>
 </html>
