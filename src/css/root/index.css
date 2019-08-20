@@ -71,6 +71,7 @@ main{
 }
 .shell-bg{
   text-align:left;
+  white-space: pre-line;
   border: 2px solid #3D3D3D;
   box-shadow: 0px 3px #666666;
   color:#BCBCBC;
