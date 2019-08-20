@@ -7,7 +7,12 @@
 <body>
 <main>
   <div class="container">
-    <div class="shell-bg">
+    <div class="process-title" style="border-radius:2px;">
+      <span class="window-title-btn window-default-btn">–</span>
+      <span class="window-title-btn window-default-btn">□</span>
+      <span class="window-title-btn window-red-btn" style="border-radius:0px 2px 0px 0px;">×</span>
+    </div>
+    <div class="shell-bg" style="border-radius:0px 0px 5px 5px;">
       <p><span class="user-shell">bob@linux:~ </span>$ ls -al</p>
       <p>
       total 60
@@ -19,10 +24,12 @@
       -rwxrwx--- 1 ZoneTwelve ZoneTwelve 52386 Aug 20 00:43 exploit
       </p>
       <span class="user-shell">bob@linux:~ </span>$ ./exploit</p>
-      <p>Success!</p>
-      <p><span class="user-shell">root@linux:/home/ZoneTwelve</span>$ <span class="shell-blink"> ▍</span></p>
+      <p>
+      Success!
+      <br>
+      Press any key to continue ...
+      <span class="shell-blink"> ▍</span></p>
     </div>
-    
   </div>
 </main>
 </body>
