@@ -1,6 +1,6 @@
 body{
   text-align:center;
-  margin:100px auto;
+  margin:20vmin auto;
   background:#000 url("/src/images/arch-linux-01.png") center center fixed no-repeat;;
   background-size:cover;
 }
