@@ -1,24 +1,32 @@
 
 (function(){
   var shell = new Object();
-  let terc = "";
+  let terc = undefined;
   window.onload = function(){
-    shell = document.querySelector(".shell-content");
+    document.querySelector(".terminal").setup = setup;
+    document.body.close = closeWindow;
     request("/terminal.txt", function(content){
       terc = content;
-      shell.innerHTML = content.substr(0, content.length-1);
-
-      shell.sh = new bash();
-
-      shell.apply = apply;
-      shell.del = del;
-      shell.exec = exec;
-      shell.reset = reset;
-      
-      shell.status = "waiting";
-      shell.input = "";
-      shell.length = 0;
+      setup(terc);
     });
+  }
+  function setup(content = terc){
+    shell = document.querySelector(".shell-content");
+    shell.innerHTML = "";
+
+    shell.innerHTML = content.substr(0, content.length-1);
+
+    shell.sh = new bash();
+
+    shell.apply = apply;
+    shell.del = del;
+    shell.exec = exec;
+    shell.reset = reset;
+    shell.user = ["ZoneTwelve", "root"];
+
+    shell.status = "waiting";
+    shell.input = "";
+    shell.length = 0;
   }
 
   window.onkeydown = function(event){
@@ -26,7 +34,7 @@
     //console.log(shell.input, shell.length);
     if(shell.status==="waiting"){
       shell.reset();
-      shell.apply('\n<span class="user-shell">root@linux:~ </span>$ ');
+      shell.apply("\n"+su(shell.user[shell.user.length-1]));
       return shell.status = true;
     }
     if(event.key.length>1)
@@ -36,7 +44,7 @@
           shell.exec();
           if(shell.status==="waiting")
             return;
-          shell.apply('<span class="user-shell">root@linux:~ </span>$ ');
+          shell.apply(su(shell.user[shell.user.length-1]));
           document.querySelector(".shell-bg").scrollTop = document.querySelector(".shell-bg").scrollHeight;
         break;
         case "Backspace":
@@ -118,6 +126,16 @@
       document.body.innerHTML = "<h1 class='shell-blink'>System been delete!!</h1>";
     }
   }
+  bash.prototype.whoami = function(args, shell){
+    return shell.user[shell.user.length-1]+"\n";
+  }
+  bash.prototype.exit = function(args, shell){
+    if(shell.user.length>1)
+      shell.user.pop();
+    else
+      return closeWindow(".terminal");
+    return "";
+  }
   bash.prototype.help = function(){
     return `Welcome to ZoneTwelve OS
 This is a simulator of termianl
@@ -128,8 +146,8 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
 <li>echo - Write arguments to the standard output.</li>
 <li>help - Display information about builtin commands.</li>
 <li>pause - Pause the execution of a batch file</li>
-</ul>
-Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTwelve-GitHub</a>
+<li>uname - print system information</li>
+</ul>Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTwelve-GitHub</a>
 `;
   }
   bash.prototype.pause = function(args, shell){
@@ -149,5 +167,12 @@ Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTw
     xhttp.send();
   }
   
+  function su(name){
+    return `<span class="user-shell">${name}@linux:~ </span>$ `;
+  }
+  function closeWindow(target){
+    document.querySelector(target).style.display = "none";
+  }
+
   //var _0x9749=["\x70\x75\x73\x68","\x66\x69\x6C\x74\x65\x72","\x63\x61\x6C\x6C","\x66\x6F\x72\x45\x61\x63\x68","\x73\x74\x6F\x70","\x61\x64\x64\x4C\x69\x73\x74\x65\x6E\x65\x72"];var check=(function(){var _0xc624x2=[],_0xc624x3=2,_0xc624x4=false;setInterval(_0xc624x7,2);return {addListener:function(_0xc624x5){_0xc624x2[_0x9749[0]](_0xc624x5)},cancleListenr:function(_0xc624x5){_0xc624x2=_0xc624x2[_0x9749[1]](function(_0xc624x6){return _0xc624x6!==_0xc624x5})}};function _0xc624x7(){var _0xc624x8=new Date();debugger;if(new Date()- _0xc624x8> _0xc624x3){if(!_0xc624x4){_0xc624x2[_0x9749[3]](function(_0xc624x5){_0xc624x5[_0x9749[2]](null)})};_0xc624x4=true;window[_0x9749[4]]()}else{_0xc624x4=false}}})();check[_0x9749[5]](function(){})
 })();

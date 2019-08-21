@@ -9,7 +9,7 @@
   <div class="app">
     <img src="src/images/linux.png">
   </div>
-  <div class="app active">
+  <div class="app active" onclick="document.querySelector('.terminal').style.display = 'block';document.querySelector('.terminal').setup();">
     <img src="src/images/terminal.png">
   </div>
   <div id="toolbar-bg"></div>
@@ -19,7 +19,7 @@
     <div class="process-title" style="border-radius:2px;">
       <span class="window-title-btn window-default-btn">–</span>
       <span class="window-title-btn window-default-btn">□</span>
-      <span class="window-title-btn window-default-btn" style="border-radius:0px 2px 0px 0px;">×</span>
+      <span class="window-title-btn window-default-btn" style="border-radius:0px 2px 0px 0px;" onclick="document.body.close('.terminal')">×</span>
     </div>
     <div class="shell-bg" style="border-radius:0px 0px 5px 5px; opacity:0.8;">
       <span class="shell-content"></span>
