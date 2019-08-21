@@ -253,6 +253,9 @@
       return this.cd(args, shell)
     }
 
+    if(path[0]!="/")
+      path = shell.pwd+"/"+path;
+
     let fs = shell.filesystem;
     var ps = path.split("/").filter(v=>v!="");
     ps.unshift("");
@@ -291,7 +294,7 @@
     else if(path==".."){
       path = shell.pwd.replace(/\/\S+/, "");
     }
-
+    console.log(path);
     if(path[0]!="/")
       path = shell.pwd+"/"+path;
 
