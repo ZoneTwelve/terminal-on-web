@@ -1,0 +1,8 @@
+<span class="user-shell">ZoneTwelve@linux:~ </span>$ ls -al
+total 60
+drwxrwxr-x 2 ZoneTwelve ZoneTwelve  4096 Aug 20 00:42 .
+drwxrwxr-x 5 ZoneTwelve ZoneTwelve  4096 Aug 20 00:42 ..
+-rwxrwx--- 1 ZoneTwelve ZoneTwelve 52386 Aug 20 00:43 exploit
+<span class="user-shell">ZoneTwelve@linux:~ </span>$ ./exploit
+Success!
+Press any key to continue ...

@@ -1,0 +1,19 @@
+<!DOCTYPE html> 
+<html>
+  <head lang="en">
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no"/>
+    <style> * { padding :0; margin :0; } html, body { width :100%; height :100%; } </style>
+  </head>
+  <body>
+    <div style="position: absolute;top:-1000px;left:-1000px"> <input type="text" id="text"> </div>
+    <script> document.body.onclick=function() { console.log("here"); var elem=document.getElementById("text"); elem.focus() };
+      window.onkeydown = function (e){
+        document.body.append(e.key);
+      }
+       
+    </script> 
+  </body>
+</html>
+
