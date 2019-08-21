@@ -347,7 +347,7 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
     }else{
       document.body.style.background = `#000 url("${args[1]}") center center fixed no-repeat`;
     }
-    return "Success! "+this.bg[args[1]]||args[1]+"\n";
+    return "Success! "+(this.bg[args[1]]||args[1])+"\n";
   }
 
   function request(target, callback){
