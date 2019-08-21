@@ -224,6 +224,9 @@
       document.body.innerHTML = "<h1 class='shell-blink'>System been delete!!</h1>";
     }
   }
+  bash.prototype.pwd = function(args, shell){
+    return shell.pwd+"\n";
+  }
   bash.prototype.whoami = function(args, shell){
     return shell.user[shell.user.length-1]+"\n";
   }
@@ -271,7 +274,8 @@
         return `bash: cd: ${htmlencode(path)}: No such file or directory\n`;
       find = false;
     }
-
+    if(path=="")
+      path = "/";
     shell.pwd = path;
     return "";
   }
@@ -282,6 +286,14 @@
       argv = path
       path = shell.pwd;
     }
+    if(path==".")
+      path = shell.pwd;
+    else if(path==".."){
+      path = shell.pwd.replace(/\/\S+/, "");
+    }
+
+    if(path[0]!="/")
+      path = shell.pwd+"/"+path;
 
     let fs = shell.filesystem;
     var ps = path.split("/").filter(v=>v!="");
@@ -367,6 +379,7 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
 <li>uname - print system information</li>
 <li>cd - Change the directory.</li>
 <li>ls - list directory contents or print file content</li>
+<li>pwd - Print the name of the current working directory.</li>
 </ul>Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTwelve-GitHub</a>
 `;
   }

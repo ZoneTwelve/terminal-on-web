@@ -53,6 +53,7 @@ main{
   //box-shadow:0px 3px #666666;
   box-shadow:0px 3px #6F6F6F;
   background:#6F6F6F;
+  padding:2px;
 }
 
 .user-shell{
