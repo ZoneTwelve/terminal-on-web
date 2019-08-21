@@ -11,26 +11,8 @@
       }
       document.querySelector('.terminal').style.display = 'block';
       document.querySelector(".shell-content").innerHTML = "";
-      //setTimeout(function(){
       document.querySelector('.terminal').setup();
-      //}, 100);
       document.querySelector('#terminal').className+=' app-active';
-      //if(document.querySelector(".terminal").style.display=="none")
-      //  document.querySelector(".terminal").style.display = "none";
-      /*
-      if(this.className.indexOf("app-active")==-1)
-        document.body.close('terminal');
-      if(document.querySelector(".terminal").style.display=="none")
-        setTimeout(function(){
-          document.querySelector('.terminal').style.display = 'block';
-          if(this.className.indexOf("app-active")!=-1){
-            document.querySelector('.terminal').setup();
-            document.querySelector('#terminal').className+=' app-active';
-          }
-        }, 100)
-      else
-        document.querySelector(".terminal").style.display = "none";
-      */
     }
     request("/terminal.txt", function(content){
       terc = content;
@@ -129,7 +111,6 @@
 
   window.onkeydown = function(event){
     if(shell.status!=undefined)
-    //console.log(shell.input, shell.length);
     if(shell.status==="waiting"){
       shell.reset();
       shell.apply("\n"+su(shell.user[shell.user.length-1], shell.pwd));
@@ -191,10 +172,8 @@
     ];
   }
   bash.prototype.runenv = function(args){
-    //let state = false;
     for(let env of this.env){
       if(env.shell==args[0]&&typeof this[env.command[0]]==="function"){
-        //this[env.command[0]](env.command.slice());
         return env;
       }
     }
@@ -263,16 +242,14 @@
       var find = false;
       let p = ps[i];
       for(let folder of fs){
-        //console.log(`'${p}'`, "vs", `'${folder.name}'`, find);
         if(folder.type==0)
-          return `bash: cd: ${htmlencode(path)}: Not a directory`;
+          return `bash: cd: ${htmlencode(path)}: Not a directory\n`;
         if(folder.name==p&&!find){
           fs = folder.content;
           find = true;
           console.log("folder found", `'${p}'`, "vs", `'${folder.name}'`, find);
         }
       }
-      //console.log(i, fs);
       if(!find)
         return `bash: cd: ${htmlencode(path)}: No such file or directory\n`;
       find = false;
@@ -332,41 +309,8 @@
     let groupa = ("00"+((~~(file.access/10)) %10).toString(2)).substr(-3).split("").map((v,i)=>v==1?access[i]:"-").join("");
     let ownera = ("00"+((~~(file.access/100))%10).toString(2)).substr(-3).split("").map((v,i)=>v==1?access[i]:"-").join("");
 
-    //let othera = (file.access%10).toString(2).split("").map((v, i)=>v==1?access[i]:"-").join("");
-    //let groupa = ((~~(file.acces/10))%10).toString(2).split("").map((v, i)=>v==1?access[i]:"-").join("");
-    //let ownera = ("00"+((~~(file.access/100))%10).toString(2)).substr(-3).split("").map((v, i)=>v==1?access[i]:"-").join("");
     return `${file.type==1?"d":"-"}${ownera}${groupa}${othera} ${file.owner.replace(/:/, " ")} ${file.name}`;
   }
-  /*
-  bash.prototype.cd = function(args, shell){
-    let path = args[1];
-    let fs = shell.filesystem;
-    console.log(fs);
-    if(path=="/"){
-      shell.pwd = "/";
-      return "";
-    }
-    for(var i=0,ps=path.split("/");i<ps.length;i++){
-      let p = ps[i];
-      console.log(p, ps);
-      let inside = false;
-      for(let folder of fs){
-        let inside = false;
-        console.log("vs", folder.name, p);
-        if(folder.name==p){
-          find = true;
-          console.log(i, fs, p, folder);
-          fs = folder.content;
-
-        }
-        console.log("owo", fs);
-        if(!find)
-          return `1 bash: cd: ${htmlencode(path)}: No such file or directory`
-      }
-      shell.pwd = path;
-      return "";
-    }
-  }*/
 
   bash.prototype.help = function(){
     return `Welcome to ZoneTwelve OS
@@ -388,7 +332,6 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
   }
   bash.prototype.pause = function(args, shell){
     shell.status = "waiting";
-    //debugger;
     return "Press any key to continue ...";
   }
 

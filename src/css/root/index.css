@@ -9,13 +9,6 @@ main{
   margin:20vmin auto;
 }
 
-*{
-  /* * /
-  
-  border: 1px solid black;
-  
-  / * */
-}
 .terminal{
   position: relative; 
 }
@@ -154,19 +147,28 @@ main{
   background:#4C4C4C;
 }
 .toolbar-left{
+  position: relative;
   text-align:center;
   position:fixed;
   top:0px;
   left:-75px;
   width:80px;
   height:100%;
-  //background:#3C3C3C;
-  //opacity:0.2;
-  transition-duration: 0.5s;
 }
 .toolbar-left:hover{
   left:0px;
   transition-duration: 0.2s;
+}
+@keyframes leftpopout{
+  0%  {left:-75px;}
+  50% {left:  0px;}
+  100%{left:-75px;}
+}
+
+.popdev{
+  left:-75px;
+  animation-name:leftpopout;
+  animation-duration:2s;
 }
 
 @media (min-width: 576px) {
