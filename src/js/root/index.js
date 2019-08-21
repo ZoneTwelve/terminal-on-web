@@ -227,6 +227,8 @@
       path = shell.pwd.split("/");
       path.pop();
       path = path.join("/");
+      if(path=="")
+        path = "/";
     }
     if(path==".")
       return "";
