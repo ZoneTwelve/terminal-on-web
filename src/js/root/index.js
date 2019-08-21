@@ -66,15 +66,33 @@
   }
   function exec(){
     let args = shell.input.split(" ");
-    if(shell.sh[args[0]]!=undefined)
+    let run = shell.sh.runenv(args);
+    if(shell.sh[args[0]]!=undefined){
       shell.apply(shell.sh[args[0]](args, shell));
-    else if(args[0]!="")
+    }else if(run!=false){
+      shell.apply(shell.sh[run.command[0]](run.command.slice(), shell));
+      return this.reset();
+    }else if(args[0]!=""){
       shell.apply(`Command <b>${htmlencode(args[0])}</b> not found - Enter <b>help</b> to find out more command\n`);
+    }
     this.reset();
   }
 
   function bash(){
-    this.env = [];
+    this.env = [
+      {shell:"cls", command:["clear"]},
+      {shell:"uname", command:["echo", "Linux 1.0.0 #64-ZoneTwelve OS"]}
+    ];
+  }
+  bash.prototype.runenv = function(args){
+    //let state = false;
+    for(let env of this.env){
+      if(env.shell==args[0]&&typeof this[env.command[0]]==="function"){
+        //this[env.command[0]](env.command.slice());
+        return env;
+      }
+    }
+    return false;
   }
   bash.prototype.echo = function(args){
     args.shift();
