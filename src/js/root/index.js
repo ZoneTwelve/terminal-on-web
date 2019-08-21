@@ -271,6 +271,10 @@
   bash.prototype.ls = function(args, shell){
     let path = args[2]||args[1]||shell.pwd;
     let argv = args[1];
+    if(path=="-al"){
+      argv = path
+      path = shell.pwd;
+    }
 
     let fs = shell.filesystem;
     var ps = path.split("/").filter(v=>v!="");
@@ -294,7 +298,7 @@
       return `ls: cannot access ${htmlencode(path)}: No such file or directory\n`;
     if(typeof fs==="string")
       return fs;
-    if(args[2]!=undefined){
+    if(argv!=undefined){
       return fs.map(v=>this.filestruct(v)).join("\n")+"\n";
     }
     return fs.map(v=>v.name).join(" ")+"\n";
@@ -351,6 +355,7 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
 <li>clear - Clean the screen</li>
 <li>echo - Write arguments to the standard output.</li>
 <li>help - Display information about builtin commands.</li>
+<li>exit - Exit the shell.</li>
 <li>pause - Pause the execution of a batch file</li>
 <li>uname - print system information</li>
 <li>cd - Change the directory.</li>
