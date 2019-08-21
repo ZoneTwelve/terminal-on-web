@@ -9,7 +9,7 @@
   <div class="app">
     <img src="src/images/linux.png">
   </div>
-  <div class="app active" onclick="document.querySelector('.terminal').style.display = 'block';document.querySelector('.terminal').setup();">
+  <div class="app active" onclick="document.body.close('.terminal');setTimeout(function(){document.querySelector('.terminal').style.display = 'block';document.querySelector('.terminal').setup();}, 100)">
     <img src="src/images/terminal.png">
   </div>
   <div id="toolbar-bg"></div>
