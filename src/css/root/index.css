@@ -139,7 +139,7 @@ main{
   padding:16px;
   background:rgba(60, 60, 60, 0.2);
 }
-.toolbar>.active{
+.toolbar>.app-active{
   background:#3A3A3A;
 }
 .toolbar>.app>img{
@@ -148,6 +148,9 @@ main{
 }
 .toolbar>.app:hover{
   background:#3F3F3F;
+}
+.toolbar>.app:active{
+  background:#4C4C4C;
 }
 .toolbar-left{
   text-align:center;
