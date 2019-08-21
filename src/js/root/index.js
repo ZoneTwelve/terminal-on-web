@@ -91,10 +91,29 @@
                 
                 {
                   name:"exploit",
-                  type:0
+                  type:0,
+                  access:110,
+                  owner:"ZoneTwelve:ZoneTwelve",
+                  content:null,
                 }
 
               ]
+            }
+
+          ]
+        },{
+          name:"tmp",
+          type:1,
+          access:775,
+          owner:"root:root",
+          content:[
+            
+            {
+              name:".sess_flag",
+              type:0,
+              access:664,
+              owner:"ZoneTwelve:ZoneTwelve",
+              content:"Z0{1t's-my-new-terminal}\n"
             }
 
           ]
@@ -231,20 +250,66 @@
       var find = false;
       let p = ps[i];
       for(let folder of fs){
-        console.log(`'${p}'`, "vs", `'${folder.name}'`, find);
+        //console.log(`'${p}'`, "vs", `'${folder.name}'`, find);
+        if(folder.type==0)
+          return `bash: cd: ${htmlencode(path)}: Not a directory`;
         if(folder.name==p&&!find){
           fs = folder.content;
           find = true;
           console.log("folder found", `'${p}'`, "vs", `'${folder.name}'`, find);
         }
       }
-      console.log(i, fs);
+      //console.log(i, fs);
       if(!find)
         return `bash: cd: ${htmlencode(path)}: No such file or directory\n`;
       find = false;
     }
+
     shell.pwd = path;
     return "";
+  }
+  bash.prototype.ls = function(args, shell){
+    let path = args[2]||args[1]||shell.pwd;
+    let argv = args[1];
+
+    let fs = shell.filesystem;
+    var ps = path.split("/").filter(v=>v!="");
+    ps.unshift("");
+    for(var i=0;i<ps.length;i++){
+      var find = false;
+      let p = ps[i];
+      for(let folder of fs){
+
+        if(folder.name==p&&!find){
+          fs = folder.content;
+          find = true;
+          console.log("folder found", `'${p}'`, "vs", `'${folder.name}'`, find);
+        }
+      }
+      if(!find)
+        return `ls: cannot access ${htmlencode(path)}: No such file or directory\n`;
+      find = false;
+    }
+    if(fs==null)
+      return `ls: cannot access ${htmlencode(path)}: No such file or directory\n`;
+    if(typeof fs==="string")
+      return fs;
+    if(args[2]!=undefined){
+      return fs.map(v=>this.filestruct(v)).join("\n")+"\n";
+    }
+    return fs.map(v=>v.name).join(" ")+"\n";
+  }
+  bash.prototype.filestruct = function(file){
+    console.log(file);
+    let access = "rwx";
+    let othera = ("00"+(    file.access      %10).toString(2)).substr(-3).split("").map((v,i)=>v==1?access[i]:"-").join("");
+    let groupa = ("00"+((~~(file.access/10)) %10).toString(2)).substr(-3).split("").map((v,i)=>v==1?access[i]:"-").join("");
+    let ownera = ("00"+((~~(file.access/100))%10).toString(2)).substr(-3).split("").map((v,i)=>v==1?access[i]:"-").join("");
+
+    //let othera = (file.access%10).toString(2).split("").map((v, i)=>v==1?access[i]:"-").join("");
+    //let groupa = ((~~(file.acces/10))%10).toString(2).split("").map((v, i)=>v==1?access[i]:"-").join("");
+    //let ownera = ("00"+((~~(file.access/100))%10).toString(2)).substr(-3).split("").map((v, i)=>v==1?access[i]:"-").join("");
+    return `${file.type==1?"d":"-"}${ownera}${groupa}${othera} ${file.owner.replace(/:/, " ")} ${file.name}`;
   }
   /*
   bash.prototype.cd = function(args, shell){
@@ -288,6 +353,8 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
 <li>help - Display information about builtin commands.</li>
 <li>pause - Pause the execution of a batch file</li>
 <li>uname - print system information</li>
+<li>cd - Change the directory.</li>
+<li>ls - list directory contents or print file content</li>
 </ul>Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTwelve-GitHub</a>
 `;
   }
