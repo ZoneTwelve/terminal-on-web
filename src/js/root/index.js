@@ -49,7 +49,59 @@
     shell.del = del;
     shell.exec = exec;
     shell.reset = reset;
+    shell.pwd = "/home/ZoneTwelve";
+    shell.passwd = [
+      {
+        name:"root",
+        group:"root"
+      },
+      {
+        name:"ZoneTwelve",
+        group:"ZoneTwelve sudo"
+      }
+    ]
     shell.user = ["ZoneTwelve", "root"];
+    shell.filesystem = [{
+      name:"",
+      type:1,
+      access:755,
+      owner:"root:root",
+      content:[
+        
+        {
+          name:"home",
+          type:1,
+          access:755,
+          owner:"root:root",
+          content:[
+            
+            {
+              name:"root",
+              type:1,
+              access:750,
+              owner:"root:root",
+              content:[]
+            },
+            {
+              name:"ZoneTwelve",
+              type:1,
+              access:750,
+              owner:"ZoneTwelve:ZoneTwelve",
+              content:[
+                
+                {
+                  name:"exploit",
+                  type:0
+                }
+
+              ]
+            }
+
+          ]
+        }
+
+      ]
+    }];
 
     shell.status = "waiting";
     shell.input = "";
@@ -61,7 +113,7 @@
     //console.log(shell.input, shell.length);
     if(shell.status==="waiting"){
       shell.reset();
-      shell.apply("\n"+su(shell.user[shell.user.length-1]));
+      shell.apply("\n"+su(shell.user[shell.user.length-1], shell.pwd));
       return shell.status = true;
     }
     if(event.key.length>1)
@@ -71,7 +123,7 @@
           shell.exec();
           if(shell.status==="waiting")
             return;
-          shell.apply(su(shell.user[shell.user.length-1]));
+          shell.apply(su(shell.user[shell.user.length-1], shell.pwd));
           document.querySelector(".shell-bg").scrollTop = document.querySelector(".shell-bg").scrollHeight;
         break;
         case "Backspace":
@@ -163,6 +215,68 @@
       return closeWindow("terminal");
     return "";
   }
+  bash.prototype.cd = function(args, shell){
+    let path = args[1];
+
+    if(path==undefined){
+      args[1] = `/home/${shell.user[shell.user.length-1]}`;
+      console.log(args);
+      return this.cd(args, shell)
+    }
+
+    let fs = shell.filesystem;
+    var ps = path.split("/").filter(v=>v!="");
+    ps.unshift("");
+    for(var i=0;i<ps.length;i++){
+      var find = false;
+      let p = ps[i];
+      for(let folder of fs){
+        console.log(`'${p}'`, "vs", `'${folder.name}'`, find);
+        if(folder.name==p&&!find){
+          fs = folder.content;
+          find = true;
+          console.log("folder found", `'${p}'`, "vs", `'${folder.name}'`, find);
+        }
+      }
+      console.log(i, fs);
+      if(!find)
+        return `bash: cd: ${htmlencode(path)}: No such file or directory\n`;
+      find = false;
+    }
+    shell.pwd = path;
+    return "";
+  }
+  /*
+  bash.prototype.cd = function(args, shell){
+    let path = args[1];
+    let fs = shell.filesystem;
+    console.log(fs);
+    if(path=="/"){
+      shell.pwd = "/";
+      return "";
+    }
+    for(var i=0,ps=path.split("/");i<ps.length;i++){
+      let p = ps[i];
+      console.log(p, ps);
+      let inside = false;
+      for(let folder of fs){
+        let inside = false;
+        console.log("vs", folder.name, p);
+        if(folder.name==p){
+          find = true;
+          console.log(i, fs, p, folder);
+          fs = folder.content;
+
+        }
+        console.log("owo", fs);
+        if(!find)
+          return `1 bash: cd: ${htmlencode(path)}: No such file or directory`
+      }
+      shell.pwd = path;
+      return "";
+    }
+  }*/
+
   bash.prototype.help = function(){
     return `Welcome to ZoneTwelve OS
 This is a simulator of termianl
@@ -194,8 +308,8 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
     xhttp.send();
   }
   
-  function su(name){
-    return `<span class="user-shell">${name}@linux:~ </span>$ `;
+  function su(name, pwd){
+    return `<span class="user-shell">${name}@linux:${pwd.split("/").pop()==name?"~":pwd} </span>$ `;
   }
   function closeWindow(target){
     document.querySelector("."+target).style.display = "none";
