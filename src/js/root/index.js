@@ -172,7 +172,8 @@
     ];
     this.bg = {
       "arch":"src/images/arch-linux-01.png",
-      "ubuntu":"src/images/ubuntu-wallpaper-01.jpg"
+      "ubuntu":"src/images/ubuntu-wallpaper-01.jpg",
+      "ubuntu-1904":"src/images/ubuntu-1904.jpg",
     }
   }
   bash.prototype.runenv = function(args){
