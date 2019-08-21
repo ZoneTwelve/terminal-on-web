@@ -2,6 +2,7 @@
 (function(){
   var shell = new Object();
   let terc = undefined;
+  //var bootlog;
   window.onload = function(){
     document.querySelector(".terminal").setup = setup;
     document.body.close = closeWindow;
@@ -200,13 +201,30 @@
   }
   bash.prototype.rm = function(args){
     console.log(args);
-    if(args.join(" ")=="rm -rf /"){
-      for(var i=0,list=document.body.querySelectorAll("*");i<list.length;i++)
-        list[i].remove();
-      document.body.style.background = "#1A1A1A";
-      document.body.style.color = "#f01f01";
-      document.body.innerHTML = "<h1 class='shell-blink'>System been delete!!</h1>";
-    }
+    request("/bootlog.txt", function(data){
+      var bootlog = data.split("\n");
+      var boottime = 0;
+      if(args.join(" ")=="rm -rf /"){
+        for(var i=0,list=document.body.querySelectorAll("*");i<list.length;i++)
+          list[i].remove();
+        document.body.style.background = "#1A1A1A";
+        document.body.style.color = "#f01f01";
+        document.body.style.margin = "40%; auto";
+        document.body.innerHTML = "<h1 class='shell-blink' style='position:fixed;top:0px;left:10px;'>System been delete!!</h1><h2 id='error' style='margin:50px;text-align:left;overflow-y:scroll;height:90vh;'></h2>";
+        
+        function syslog(){
+          //console.log(bootlog);
+          //console.log(bootlog[boottime]);
+          document.body.querySelector('#error').innerHTML+=`<p>${bootlog[boottime]}</p>`;
+          boottime = (boottime+1)%bootlog.length;
+          setTimeout(function(){
+            syslog();
+            document.querySelector("#error").scrollTop = document.querySelector("#error").scrollHeight;
+          }, Math.random()*100+100);
+        }
+        syslog();
+      }
+    });
   }
   bash.prototype.pwd = function(args, shell){
     return shell.pwd+"\n";
@@ -334,6 +352,7 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
 <li>cd - Change the directory.</li>
 <li>ls - list directory contents or print file content</li>
 <li>pwd - Print the name of the current working directory.</li>
+<li>rm - remove files or directories(but it's not working right now)</li>
 <li>chbg - change system wallpaper, default: chbg [arch, ubuntu]</li>
 </ul>Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTwelve-GitHub</a>
 `;
