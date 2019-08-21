@@ -236,6 +236,13 @@
   }
   bash.prototype.cd = function(args, shell){
     let path = args[1];
+    if(path==".."){
+      path = shell.pwd.split("/");
+      path.pop();
+      path = path.join("/");
+    }
+    if(path==".")
+      return "";
 
     if(path==undefined){
       args[1] = `/home/${shell.user[shell.user.length-1]}`;
