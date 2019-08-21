@@ -170,6 +170,10 @@
       {shell:"cls", command:["clear"]},
       {shell:"uname", command:["echo", "Linux 1.0.0 #64-ZoneTwelve OS"]}
     ];
+    this.bg = {
+      "arch":"src/images/arch-linux-01.png",
+      "ubuntu":"src/images/ubuntu-wallpaper-01.jpg"
+    }
   }
   bash.prototype.runenv = function(args){
     for(let env of this.env){
@@ -327,12 +331,23 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
 <li>cd - Change the directory.</li>
 <li>ls - list directory contents or print file content</li>
 <li>pwd - Print the name of the current working directory.</li>
+<li>chbg - change system wallpaper, default: chbg [arch, ubuntu]</li>
 </ul>Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTwelve-GitHub</a>
 `;
   }
   bash.prototype.pause = function(args, shell){
     shell.status = "waiting";
     return "Press any key to continue ...";
+  }
+
+  bash.prototype.chbg = function(args, shell){
+    console.log(args);
+    if(this.bg[args[1]]!=undefined){
+      document.body.style.background = `#000 url("${this.bg[args[1]]}") center center fixed no-repeat`;
+    }else{
+      document.body.style.background = `#000 url("${args[1]}") center center fixed no-repeat`;
+    }
+    return "Success! "+this.bg[args[1]]||args[1]+"\n";
   }
 
   function request(target, callback){
