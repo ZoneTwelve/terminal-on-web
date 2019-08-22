@@ -130,7 +130,7 @@ main{
   text-align:center;
   width:100%;
   height:auto;
-  padding:16px;
+  padding:16px 0px;
   background:rgba(60, 60, 60, 0.2);
 }
 .toolbar>.app-active{
