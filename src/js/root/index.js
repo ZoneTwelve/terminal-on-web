@@ -122,6 +122,7 @@
         case "Enter":
           shell.apply("\n");
           shell.exec();
+          document.querySelector(".shell-bg").scrollTop = document.querySelector(".shell-bg").scrollHeight;
           if(shell.status==="waiting")
             return;
           shell.apply(su(shell.user[shell.user.length-1], shell.pwd));
