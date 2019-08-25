@@ -170,7 +170,8 @@
   function bash(){
     this.env = [
       {shell:"cls", command:["clear"]},
-      {shell:"uname", command:["echo", "Linux 1.0.0 #64-ZoneTwelve OS"]}
+      {shell:"uname", command:["echo", "Linux 1.0.0 #64-ZoneTwelve OS"]},
+      {shell:"snake", command:["open", "snake"]}
     ];
     this.bg = {
       "arch":"src/images/arch-linux-01.png",
@@ -355,6 +356,7 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
 <li>pwd - Print the name of the current working directory.</li>
 <li>rm - remove files or directories(but it's not working right now)</li>
 <li>chbg - change system wallpaper, default: chbg [arch, ubuntu]</li>
+<li>snake - open snake video game</li>
 </ul>Source Code: <a href="https://github.com/ZoneTwelve/ZOneTwelve.github.io">ZoneTwelve-GitHub</a>
 `;
   }
