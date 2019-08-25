@@ -372,6 +372,15 @@ from <a href="https://zonetwelve.io">ZoneTwelve.io</a>, start development at 19/
     }
     return "Success! "+(this.bg[args[1]]||args[1])+"\n";
   }
+  bash.prototype.open = function(args, shell){
+    //if(/\/|\\/.test(args[1]))return "not allow \\ or \/";
+    let frame = document.createElement("iframe");
+    frame.style.width = "100%";
+    frame.style.height = "100%";
+    frame.style.overflow = "hidden";
+    frame.src = args[1];
+    return frame.outerHTML+"<br>";
+  }
 
   function request(target, callback){
     var xhttp = new XMLHttpRequest();
